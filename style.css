@@ -1,0 +1,210 @@
+:root{
+  --navy:#041126;
+  --navy2:#071b3a;
+  --cyan:#6eeeff;
+  --cyan2:#1ec8ff;
+  --blue:#2f6cff;
+  --yellow:#ffe45e;
+  --white:#f5fbff;
+  --muted:rgba(229,247,255,.72);
+  --line:rgba(128,229,255,.18);
+  --paper:#f7f5ec;
+  --ink:#17354a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#020916;color:var(--white);font-family:"Zen Kaku Gothic New",sans-serif;overflow-x:hidden}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+img{max-width:100%;display:block}
+body.locked{overflow:hidden}
+.scene{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 50% 60%,#123b65 0,#061832 35%,#020814 78%);overflow:hidden}
+.scene:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,7,17,.18),rgba(1,8,18,.72))}
+.stars,.stars:before,.stars:after{position:absolute;inset:0;content:"";background-image:radial-gradient(circle,rgba(255,255,255,.75) 0 1px,transparent 1.5px);background-size:82px 96px;opacity:.38;animation:drift 20s linear infinite}
+.stars:before{background-size:127px 151px;opacity:.24;animation-duration:28s;transform:translateY(20px)}
+.stars:after{background-size:51px 69px;opacity:.2;animation-duration:16s;transform:translateY(-15px)}
+.opening-glow{position:absolute;border-radius:50%;filter:blur(20px);pointer-events:none}
+.opening-glow-a{width:60vw;height:60vw;max-width:500px;max-height:500px;left:-25%;top:8%;background:rgba(0,194,255,.17);animation:floatGlow 7s ease-in-out infinite}
+.opening-glow-b{width:50vw;height:50vw;max-width:430px;max-height:430px;right:-22%;bottom:8%;background:rgba(255,221,76,.10);animation:floatGlow 9s ease-in-out infinite reverse}
+.opening-inner{position:absolute;z-index:4;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+.ao-logo{object-fit:contain;filter:drop-shadow(0 0 18px rgba(49,214,255,.32))}
+.opening-logo{width:min(38vw,155px);height:auto;margin-bottom:15px;animation:logoFloat 5s ease-in-out infinite}
+.opening-kicker,.hero-mini,.closing-small{font-family:"Montserrat",sans-serif;font-size:9px;letter-spacing:.35em;color:rgba(227,249,255,.76);margin:0}
+.opening-copy{font-family:"Yomogi",cursive;font-size:clamp(37px,10.5vw,78px);line-height:1.42;margin:35px 0 52px;text-shadow:0 12px 40px rgba(0,0,0,.55)}
+.opening-copy span,.opening-copy strong{display:block;font-weight:400}
+.opening-copy strong{font-size:1.18em;color:#fff}
+.open-button{display:flex;align-items:center;gap:12px;border:1px solid rgba(159,242,255,.55);background:rgba(7,25,50,.34);color:#efffff;border-radius:999px;padding:13px 22px 13px 27px;backdrop-filter:blur(10px);box-shadow:0 0 35px rgba(41,200,255,.12);letter-spacing:.25em;font-family:"Montserrat",sans-serif;font-size:10px;animation:pulse 2.4s ease-in-out infinite}
+.open-button i{font-style:normal;font-size:15px;line-height:1;animation:bob 1.4s ease-in-out infinite}
+.opening-wave{position:absolute;z-index:3;left:-10%;right:-10%;bottom:-15%;height:38%;background:radial-gradient(ellipse at center,rgba(47,205,255,.22),transparent 62%);filter:blur(2px);border-radius:50%;animation:waveMove 7s ease-in-out infinite}
+.envelope-scene{display:none;align-items:center;justify-content:center;opacity:0}
+.envelope-wrap{position:relative;z-index:5;text-align:center}
+.envelope-shadow{position:absolute;width:80%;height:20px;left:10%;bottom:46px;background:rgba(0,0,0,.5);filter:blur(18px);border-radius:50%;animation:shadowPulse 3s ease-in-out infinite}
+.envelope{position:relative;width:min(80vw,390px);aspect-ratio:1.55;border:0;background:none;padding:0;filter:drop-shadow(0 28px 55px rgba(0,0,0,.48));transform:translateY(10px);transition:transform .6s}
+.envelope:hover{transform:translateY(0)}
+.envelope-body{position:absolute;inset:0;background:linear-gradient(145deg,#e9fcff,#82c7d8);border-radius:8px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.45)}
+.envelope-body:before,.envelope-body:after{content:"";position:absolute;bottom:-1px;width:75%;height:75%;background:#73b5c9;clip-path:polygon(0 0,100% 100%,0 100%);opacity:.7}
+.envelope-body:after{right:0;transform:scaleX(-1)}
+.flap{position:absolute;z-index:4;left:0;top:0;width:100%;height:64%;background:#b9e8f1;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform 1s cubic-bezier(.7,0,.2,1)}
+.letter-peek{position:absolute;z-index:2;left:8%;right:8%;top:7%;height:75%;background:#fffef8;color:#12333c;border-radius:4px;padding:10% 10px 0;text-align:center;font-family:Georgia,serif;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.letter-peek img{width:80px;height:55px;margin:0 auto 2px}
+.letter-peek span{display:block;font:600 8px "Montserrat";letter-spacing:.22em}
+.letter-peek b{display:block;margin-top:10px;font:500 11px "Montserrat";letter-spacing:.2em}
+.seal{position:absolute;z-index:5;left:50%;top:53%;transform:translate(-50%,-50%);width:53px;height:53px;border-radius:50%;display:grid;place-items:center;background:#087692;box-shadow:0 5px 22px rgba(0,73,99,.7),0 0 25px rgba(75,229,255,.25);transition:.35s}
+.seal img{width:39px;height:39px}
+.tap-note{margin:28px 0 0;font:9px "Montserrat";letter-spacing:.3em;opacity:.7}
+.content-page{display:none;position:relative;min-height:100vh;background:var(--navy)}
+.ambient{position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 10%,rgba(35,164,255,.13),transparent 28%),radial-gradient(circle at 80% 70%,rgba(255,225,74,.07),transparent 24%);z-index:0}
+.paper{position:relative;z-index:1;max-width:820px;margin:auto;background:linear-gradient(180deg,rgba(3,17,37,.96),rgba(3,15,32,.985));box-shadow:0 0 100px rgba(0,0,0,.4)}
+.section-pad,.section{padding-left:22px;padding-right:22px}
+.hero{min-height:94vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding-top:90px;padding-bottom:80px}
+.hero-orbit{position:absolute;width:75vw;height:75vw;max-width:560px;max-height:560px;border:1px solid rgba(87,224,255,.13);border-radius:50%;animation:spin 22s linear infinite}
+.hero-orbit:before,.hero-orbit:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan)}
+.hero-orbit:before{left:12%;top:17%}.hero-orbit:after{right:10%;bottom:20%;background:var(--yellow);box-shadow:0 0 18px var(--yellow)}
+.hero-logo{width:115px;height:78px;margin:12px 0 8px;position:relative;z-index:1}
+.hero h1{font-family:"Yomogi",cursive;font-weight:400;font-size:clamp(44px,12vw,78px);line-height:1.2;margin:17px 0 5px;position:relative;z-index:1}
+.date{font-family:"Montserrat",sans-serif;font-size:12px;letter-spacing:.26em;position:relative;z-index:1}
+.hero-lead{margin:42px 0 0;line-height:2.1;color:var(--muted);position:relative;z-index:1}
+.scroll-hint{position:absolute;bottom:30px;display:flex;flex-direction:column;align-items:center;gap:9px;color:rgba(216,246,255,.5);font:8px "Montserrat";letter-spacing:.3em}
+.scroll-hint i{height:35px;width:1px;background:linear-gradient(var(--cyan),transparent);animation:bob 1.6s ease-in-out infinite}
+.section{padding-top:100px;padding-bottom:110px;border-top:1px solid var(--line)}
+.section-head{position:relative;z-index:1}
+.section-no{font:500 9px "Montserrat";letter-spacing:.3em;color:var(--cyan);margin:0}
+.section h2{font-family:"Yomogi",cursive;font-weight:400;font-size:clamp(35px,9vw,56px);line-height:1.35;margin:16px 0 24px}
+.section-head>p:not(.section-no){line-height:2;color:var(--muted);margin:0}
+.timeline{position:relative;margin-top:55px;padding:10px 0 5px}
+.timeline-line{position:absolute;top:0;bottom:0;left:50%;width:1px;background:linear-gradient(180deg,transparent,var(--cyan),rgba(255,224,88,.7),var(--cyan),transparent);box-shadow:0 0 15px rgba(66,217,255,.28)}
+.memory-card{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:15px;align-items:center;min-height:300px;padding:30px 0}
+.memory-card.left .memory-photo{grid-column:1}.memory-card.left .memory-copy{grid-column:2;padding-left:10px}.memory-card.right .memory-photo{grid-column:2;grid-row:1}.memory-card.right .memory-copy{grid-column:1;grid-row:1;text-align:right;padding-right:10px}
+.memory-dot{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px rgba(43,206,255,.08),0 0 20px var(--cyan);z-index:3}
+.polaroid{width:min(100%,175px);padding:9px 9px 13px;background:#f7f7f0;color:#1a3340;box-shadow:0 18px 35px rgba(0,0,0,.38);transform:rotate(-4deg);justify-self:end;position:relative}
+.memory-card.right .polaroid{justify-self:start;transform:rotate(4deg)}
+.memory-card:nth-of-type(3) .polaroid{transform:rotate(3deg)}
+.memory-card:nth-of-type(4) .polaroid{transform:rotate(-3deg)}
+.memory-card:nth-of-type(5) .polaroid{transform:rotate(-5deg)}
+.memory-card:nth-of-type(6) .polaroid{transform:rotate(5deg)}
+.polaroid img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#0a2341}
+.polaroid small{display:block;margin-top:8px;font:600 7px "Montserrat";letter-spacing:.15em}
+.blue-card{background:linear-gradient(145deg,#e8fcff,#b6eff9);padding-bottom:14px}
+.blue-card img{object-fit:contain;padding:22px;background:linear-gradient(145deg,#071d40,#0c5e83)}
+.memory-copy{position:relative;z-index:2}
+.memory-date{font:500 9px "Montserrat";letter-spacing:.14em;color:var(--cyan)}
+.memory-copy b{display:block;font:600 18px "Montserrat";letter-spacing:.06em;margin:7px 0}
+.memory-copy p{font-size:12px;line-height:1.7;margin:0;color:var(--white)}
+.memory-copy em{display:block;margin-top:9px;font-family:"Yomogi",cursive;font-style:normal;color:#fff0a1;font-size:13px}
+.history-end{text-align:center;padding:55px 0 0}
+.history-end span{display:block;font:8px "Montserrat";letter-spacing:.35em;color:rgba(224,249,255,.5)}
+.history-end strong{display:block;font:500 28px "Montserrat";letter-spacing:.16em;margin-top:10px;color:#fff}
+.announcement-section{position:relative;min-height:830px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:radial-gradient(circle at 50% 40%,rgba(26,135,209,.2),transparent 37%),linear-gradient(180deg,#03102a,#020917)}
+.announcement-stars{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.8) 0 1px,transparent 1.4px);background-size:72px 86px;opacity:.25;animation:drift 25s linear infinite}
+.announcement-inner{position:relative;z-index:2;width:100%}
+.announcement-date{font:500 11px "Montserrat";letter-spacing:.38em;color:var(--cyan);margin:45px 0 7px}
+.announcement-logo{width:115px;height:75px;margin:0 auto 24px}
+.announcement-section h2{margin:0}
+.announcement-section h2 span{display:block;font:500 11px "Montserrat";letter-spacing:.35em;color:var(--yellow);margin-bottom:13px}
+.announcement-section h2 strong{display:block;font-family:"Yomogi",cursive;font-weight:400;font-size:clamp(34px,9vw,54px);line-height:1.3}
+.secret-copy{margin:42px 0 0;line-height:2;color:var(--muted)}
+.secret-copy p{margin:7px 0}
+.secret-copy .secret-line{color:var(--white);font-size:15px;margin:22px 0}
+.secret-copy .secret-small{font-family:"Yomogi",cursive;color:var(--yellow);font-size:19px;margin:22px 0}
+.live-box{display:inline-flex;flex-direction:column;gap:7px;margin-top:33px;padding:15px 21px;border:1px solid rgba(105,229,255,.24);background:rgba(8,52,80,.24);border-radius:14px;backdrop-filter:blur(8px)}
+.live-box span{font:500 8px "Montserrat";letter-spacing:.3em;color:var(--cyan)}
+.live-box b{font:500 9px "Montserrat";letter-spacing:.1em}
+.coming{font:500 9px "Montserrat";letter-spacing:.42em;margin:38px 0 25px;color:rgba(236,251,255,.8)}
+.mini-countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:430px;margin:auto}
+.mini-countdown div{padding:11px 3px;border:1px solid rgba(111,222,255,.13);border-radius:10px;background:rgba(0,17,35,.32)}
+.mini-countdown b{display:block;font:500 21px "Montserrat"}.mini-countdown span{display:block;font:7px "Montserrat";letter-spacing:.13em;color:rgba(204,240,250,.48);margin-top:4px}
+.countdown-section{position:relative;min-height:560px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:#020814}
+.countdown-backdrop{position:absolute;inset:-15%;background:radial-gradient(ellipse at 50% 72%,rgba(33,185,255,.2),transparent 40%),radial-gradient(ellipse at 50% 40%,rgba(35,92,255,.13),transparent 42%);filter:blur(1px);animation:seaPulse 7s ease-in-out infinite}
+.the-day{position:relative;margin:0;font:500 9px "Montserrat";letter-spacing:.45em;color:var(--cyan)}
+.big-date{position:relative;font:500 clamp(74px,20vw,130px) "Montserrat";letter-spacing:.05em;line-height:1;margin:18px 0 20px;text-shadow:0 0 45px rgba(53,207,255,.25)}
+.countdown-caption{position:relative;font-size:12px;color:var(--muted);margin:0 0 35px}
+.big-countdown{position:relative;display:flex;align-items:center;gap:10px}
+.big-countdown div{text-align:center;min-width:54px}.big-countdown b{display:block;font:500 25px "Montserrat"}.big-countdown span{display:block;margin-top:5px;font:7px "Montserrat";letter-spacing:.15em;color:rgba(220,247,255,.45)}.big-countdown i{font:300 17px "Montserrat";color:rgba(207,243,255,.28);font-style:normal}
+.wave-line{position:absolute;bottom:55px;width:70%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.35}
+.letter-section{background:linear-gradient(180deg,#06162c,#0a1d38)}
+.letter-lead{font-family:"Yomogi",cursive!important;color:var(--white)!important;font-size:23px!important;margin-top:24px!important}
+.letter-intro{margin:40px 0 32px;padding-left:17px;border-left:1px solid rgba(111,227,255,.35);line-height:2;color:var(--muted);font-size:13px}
+.letter-intro p{margin:0 0 14px}.letter-celebrate{font-family:"Yomogi",cursive;color:#fff1a4;font-size:17px}
+.letter-form{position:relative;margin-top:35px;padding:31px 22px 25px;background:var(--paper);color:var(--ink);box-shadow:0 30px 65px rgba(0,0,0,.35);transform:rotate(-.45deg);border-radius:3px;overflow:visible}
+.letter-form:before{content:"";position:absolute;inset:10px;border:1px dashed rgba(23,53,74,.13);pointer-events:none}
+.paperclip{position:absolute;right:24px;top:-17px;width:17px;height:58px;border:2px solid #aeb7bc;border-bottom:0;border-radius:14px 14px 0 0;transform:rotate(10deg);opacity:.75}
+.letter-topline{position:relative;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid rgba(23,53,74,.16);padding-bottom:13px;margin-bottom:22px}.letter-topline span:first-child{font:600 8px "Montserrat";letter-spacing:.25em;opacity:.5}.letter-topline strong{font-family:"Yomogi",cursive;font-size:22px;font-weight:400}.letter-count{margin-left:auto;font:8px "Montserrat";letter-spacing:.08em;opacity:.45}
+.field-label{position:relative;display:block;font:600 8px "Montserrat";letter-spacing:.2em;opacity:.48;margin:18px 0 7px}
+.letter-form input,.letter-form textarea{position:relative;width:100%;border:0;outline:none;background:transparent;color:var(--ink);padding:10px 4px;font-family:"Zen Kaku Gothic New",sans-serif}
+.letter-form textarea{resize:none;line-height:31px;min-height:280px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 30px,rgba(23,53,74,.13) 31px);padding-top:4px}
+.letter-form input{border-bottom:1px solid rgba(23,53,74,.18)}
+.letter-form input::placeholder,.letter-form textarea::placeholder{color:rgba(23,53,74,.35)}
+.send-letter{position:relative;width:100%;border:0;border-radius:999px;padding:14px;background:linear-gradient(110deg,#127ea3,#2ecdf3);color:#fff;box-shadow:0 8px 22px rgba(22,144,180,.28);display:flex;align-items:center;justify-content:center;gap:10px;margin-top:17px;transition:transform .25s,box-shadow .25s}.send-letter:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(22,144,180,.34)}.send-letter i{font-style:normal}
+.form-note,.backend-note{position:relative;font-size:8px;line-height:1.7;color:rgba(23,53,74,.52);text-align:center;margin:12px 0 0}.backend-note{color:rgba(23,53,74,.38)}
+.closing{position:relative;min-height:760px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:radial-gradient(ellipse at 50% 65%,rgba(40,187,255,.22),transparent 35%),linear-gradient(180deg,#06172d,#020712)}
+.closing:before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.7) 0 1px,transparent 1.5px);background-size:67px 83px;opacity:.23}
+.closing-light{position:absolute;width:30vw;height:30vw;min-width:220px;min-height:220px;max-width:380px;max-height:380px;border-radius:50%;background:radial-gradient(circle,rgba(77,223,255,.15),transparent 70%);animation:floatGlow 8s ease-in-out infinite}
+.closing-content{position:relative;z-index:2;padding:90px 22px}.closing-logo{width:125px;height:82px;margin:18px auto 24px}.closing h2{font-family:"Yomogi",cursive;font-weight:400;font-size:clamp(33px,8vw,50px);line-height:1.45;margin:0}.closing-message{line-height:2;color:var(--muted);margin:30px 0 24px}.closing-date{font:500 22px "Montserrat";letter-spacing:.2em}.closing-live{font:8px "Montserrat";letter-spacing:.2em;color:rgba(214,246,255,.5);margin-top:12px}.closing-final{font-family:"Yomogi",cursive;color:#fff1a4;font-size:18px;margin-top:55px}.replay{margin-top:34px;border:1px solid rgba(131,229,255,.24);background:rgba(10,38,67,.4);color:rgba(234,252,255,.72);border-radius:999px;padding:10px 18px;font:9px "Montserrat";letter-spacing:.2em}
+.toast{position:fixed;z-index:200;left:50%;bottom:24px;transform:translate(-50%,30px);opacity:0;background:rgba(3,21,39,.94);color:#e9fcff;border:1px solid rgba(134,233,255,.22);padding:13px 18px;border-radius:999px;font-size:10px;white-space:nowrap;transition:.5s;pointer-events:none;box-shadow:0 15px 35px rgba(0,0,0,.3)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.light-flight{position:fixed;z-index:190;width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 20px 7px rgba(90,225,255,.85),0 0 50px 15px rgba(48,167,255,.35);opacity:0;pointer-events:none}
+.fade-in{animation:fadeIn 1.1s both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes pulse{50%{transform:scale(1.04);box-shadow:0 0 45px rgba(41,200,255,.2)}}
+@keyframes bob{50%{transform:translateY(4px)}}
+@keyframes drift{to{transform:translateY(40px)}}
+@keyframes logoFloat{50%{transform:translateY(-7px) rotate(1deg)}}
+@keyframes floatGlow{50%{transform:translate3d(12px,-15px,0) scale(1.05)}}
+@keyframes waveMove{50%{transform:translateX(4%) scaleY(1.1)}}
+@keyframes shadowPulse{50%{transform:scaleX(.85);opacity:.3}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes seaPulse{50%{transform:scale(1.1);opacity:.8}}
+@media(min-width:700px){
+  .section-pad,.section{padding-left:70px;padding-right:70px}
+  .hero{padding-top:110px}
+  .memory-card{min-height:340px}
+  .polaroid{width:205px}
+  .letter-form{padding:42px 42px 31px}
+}
+@media(max-width:390px){
+  .section{padding-top:85px;padding-bottom:90px}
+  .memory-card{gap:9px}.memory-copy p{font-size:11px}.memory-copy b{font-size:16px}.polaroid{width:145px}
+  .letter-form{padding:27px 17px 23px}.big-countdown{gap:5px}.big-countdown div{min-width:47px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+
+/* --- 2026.09 cinematic history + secret announcement upgrade --- */
+.history-section{position:relative;overflow:hidden}
+.history-section:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 22%,rgba(63,211,255,.08),transparent 22%),radial-gradient(circle at 85% 58%,rgba(255,220,86,.06),transparent 20%)}
+.memory-photo{overflow:hidden}
+.memory-photo img{display:block;width:100%;height:100%;object-fit:cover}
+.memory-1 .memory-photo{transform:rotate(-4deg)}
+.memory-2 .memory-photo{transform:rotate(3deg)}
+.memory-3 .memory-photo{transform:rotate(-2deg)}
+.memory-4 .memory-photo{transform:rotate(4deg)}
+.memory-5 .memory-photo{transform:rotate(-3deg)}
+.memory-6 .memory-photo{transform:rotate(2deg)}
+.memory-1 .memory-photo img,.memory-2 .memory-photo img,.memory-3 .memory-photo img,.memory-4 .memory-photo img,.memory-5 .memory-photo img,.memory-6 .memory-photo img{aspect-ratio:4/5;object-fit:cover}
+
+.announcement-section{min-height:920px;background:radial-gradient(circle at 50% 42%,rgba(28,194,255,.16),transparent 23%),radial-gradient(circle at 50% 100%,rgba(255,221,87,.09),transparent 35%),linear-gradient(180deg,#020916 0%,#041b35 55%,#020712 100%);overflow:hidden}
+.announcement-stars{position:absolute;inset:0;opacity:.65;background-image:radial-gradient(circle,rgba(255,255,255,.82) 0 1px,transparent 1.6px),radial-gradient(circle,rgba(89,222,255,.55) 0 1px,transparent 1.8px);background-size:83px 97px,137px 151px;animation:starDrift 18s linear infinite}
+.announcement-beam{position:absolute;top:-18%;left:50%;width:2px;height:135%;transform:translateX(-50%) rotate(14deg);background:linear-gradient(180deg,transparent,rgba(99,225,255,.06) 20%,rgba(99,225,255,.32) 48%,rgba(255,238,145,.12) 65%,transparent);filter:blur(3px);opacity:.65;animation:beamPulse 5s ease-in-out infinite}
+.signal-ring{position:absolute;left:50%;top:32%;border:1px solid rgba(92,220,255,.13);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
+.signal-ring-1{width:230px;height:230px;animation:ringPulse 5s ease-out infinite}
+.signal-ring-2{width:420px;height:420px;animation:ringPulse 5s 1.3s ease-out infinite}
+.announcement-inner{position:relative;z-index:3;text-align:center;padding:105px 22px 90px;max-width:700px;margin:auto}
+.announcement-overline{font:600 8px "Montserrat";letter-spacing:.42em;color:rgba(178,241,255,.52);margin:0 0 22px}
+.announcement-date{font:500 clamp(58px,16vw,104px) "Montserrat";letter-spacing:.12em;line-height:.9;color:#fff;text-shadow:0 0 32px rgba(59,213,255,.3);margin:0}
+.announcement-mark-wrap{position:relative;width:108px;height:82px;margin:18px auto 16px;display:grid;place-items:center}
+.announcement-mark-wrap:before{content:"";position:absolute;width:94px;height:94px;border:1px solid rgba(92,226,255,.2);border-radius:50%;box-shadow:0 0 55px rgba(44,203,255,.13);animation:spinSlow 16s linear infinite}
+.announcement-logo{width:92px;height:auto;position:relative;z-index:2;filter:drop-shadow(0 0 15px rgba(48,209,255,.38))}
+.announcement-whisper{font:500 7px "Montserrat";letter-spacing:.36em;color:rgba(226,250,255,.34);margin:18px 0 34px}
+.announcement-section h2{margin:0;line-height:1.15}
+.announcement-section h2 span{display:block;font:400 18px "Yomogi",cursive;letter-spacing:.16em;color:#fff0a0;margin-bottom:10px;text-shadow:0 0 18px rgba(255,228,105,.22)}
+.announcement-section h2 strong{display:block;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:500;font-size:clamp(29px,8vw,52px);letter-spacing:.08em;color:#e9fbff;text-shadow:0 0 25px rgba(70,215,255,.2)}
+.announcement-divider{display:flex;align-items:center;justify-content:center;gap:8px;margin:25px 0 29px}.announcement-divider i{display:block;width:42px;height:1px;background:linear-gradient(90deg,transparent,rgba(112,225,255,.45))}.announcement-divider i:last-child{background:linear-gradient(90deg,rgba(112,225,255,.45),transparent)}.announcement-divider b{display:block;width:5px;height:5px;border-radius:50%;background:#fff0a0;box-shadow:0 0 12px #fff0a0}
+.secret-copy{line-height:2;color:rgba(221,246,255,.7);font-size:12px}.secret-copy p{margin:11px 0}.secret-copy .secret-line{font-size:15px;color:#e8fbff;margin-top:22px}.secret-copy .secret-line strong{font-weight:500;color:#fff;text-shadow:0 0 18px rgba(62,218,255,.3)}.secret-copy .secret-small{font-size:9px;letter-spacing:.14em;color:rgba(222,247,255,.36);margin-top:24px}.secret-copy .secret-last{font-size:13px;margin-top:25px;color:rgba(235,251,255,.8)}.secret-copy .secret-last em{font-family:"Yomogi",cursive;font-style:normal;color:#fff3ad;font-size:17px}
+.live-box{position:relative;margin:35px auto 0;padding:15px 17px;border:1px solid rgba(104,224,255,.2);background:rgba(6,31,55,.45);box-shadow:0 0 35px rgba(29,176,233,.08);border-radius:3px;max-width:390px}.live-box:before{content:"";position:absolute;inset:5px;border:1px solid rgba(255,255,255,.035);pointer-events:none}.live-box span{display:block;font:600 8px "Montserrat";letter-spacing:.3em;color:#9beaff}.live-box b{display:block;font:500 8px "Montserrat";letter-spacing:.12em;color:rgba(229,250,255,.52);margin-top:7px}
+.announcement-final{margin-top:48px}.announcement-final span{display:block;font:600 7px "Montserrat";letter-spacing:.42em;color:rgba(191,240,255,.32);margin-bottom:10px}.announcement-final strong{display:block;font:500 16px "Montserrat";letter-spacing:.32em;color:#fff;text-shadow:0 0 22px rgba(90,223,255,.3);animation:softBlink 2.6s ease-in-out infinite}
+.mini-countdown{margin-top:42px}
+@keyframes starDrift{to{transform:translateY(30px)}}
+@keyframes beamPulse{50%{opacity:.95;filter:blur(1px)}}
+@keyframes ringPulse{0%{transform:translate(-50%,-50%) scale(.8);opacity:0}25%{opacity:.65}100%{transform:translate(-50%,-50%) scale(1.18);opacity:0}}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+@keyframes softBlink{50%{opacity:.45;text-shadow:0 0 8px rgba(90,223,255,.15)}}
+@media(max-width:390px){.announcement-section{min-height:860px}.announcement-inner{padding-top:90px}.announcement-date{font-size:62px}.announcement-section h2 strong{font-size:28px}}
